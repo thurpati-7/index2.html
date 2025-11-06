@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registration Form</title>
+
+  <style>
+    /* ===== Basic Reset ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #4e54c8, #8f94fb);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      border-color: #4e54c8;
+      outline: none;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    button {
+      width: 100%;
+      background: #4e54c8;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #3e44a3;
+    }
+
+    .success-message {
+      color: green;
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Registration Form</h2>
+    <form id="registrationForm">
+      <div class="form-group">
+        <label for="username">Full Name</label>
+        <input type="text" id="username" name="username" placeholder="Enter your full name" />
+        <div class="error" id="usernameError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" />
+        <div class="error" id="emailError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" />
+        <div class="error" id="passwordError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" />
+        <div class="error" id="confirmPasswordError"></div>
+      </div>
+
+      <button type="submit">Register</button>
+      <p class="success-message" id="successMessage"></p>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('registrationForm');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      // Get field values
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+      // Error elements
+      const usernameError = document.getElementById('usernameError');
+      const emailError = document.getElementById('emailError');
+      const passwordError = document.getElementById('passwordError');
+      const confirmPasswordError = document.getElementById('confirmPasswordError');
+      const successMessage = document.getElementById('successMessage');
+
+      // Clear previous errors
+      usernameError.textContent = '';
+      emailError.textContent = '';
+      passwordError.textContent = '';
+      confirmPasswordError.textContent = '';
+      successMessage.textContent = '';
+
+      let valid = true;
+
+      // Validate username
+      if (username === '') {
+        usernameError.textContent = 'Name is required.';
+        valid = false;
+      }
+
+      // Validate email
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (email === '') {
+        emailError.textContent = 'Email is required.';
+        valid = false;
+      } else if (!emailPattern.test(email)) {
+        emailError.textContent = 'Enter a valid email.';
+        valid = false;
+      }
+
+      // Validate password
+      if (password.length < 6) {
+        passwordError.textContent = 'Password must be at least 6 characters.';
+        valid = false;
+      }
+
+      // Validate confirm password
+      if (confirmPassword !== password) {
+        confirmPasswordError.textContent = 'Passwords do not match.';
+        valid = false;
+      }
+
+      // If valid, show success
+      if (valid) {
+        successMessage.textContent = 'Registration successful!';
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>
